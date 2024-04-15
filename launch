@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+dir="$(dirname -- "${BASH_SOURCE[0]}")"
+
+if [ "$#" -eq 0 ]; then
+	cmd=("$dir/game/Uranium.exe")
+else
+	cmd=("$@")
+fi
+
+WINEPREFIX="$(realpath "$dir/.wine")" exec systemd-run --scope -p IPAddressDeny=any wine "${cmd[@]}"
