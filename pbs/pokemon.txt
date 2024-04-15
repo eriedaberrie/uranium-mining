@@ -682,7 +682,7 @@ BattlerAltitude=22
 Evolutions=
 [24]
 Name=Fortog
-InternalName=FARTOG
+InternalName=FORTOG
 Type1=WATER
 Type2=POISON
 BaseStats=65,50,40,35,65,80
