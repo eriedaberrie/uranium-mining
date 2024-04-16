@@ -2,18 +2,13 @@
   inputs.nixpkgs.url = "nixpkgs/nixos-unstable";
 
   outputs = {nixpkgs, ...}: let
-    forSystems = nixpkgs.lib.genAttrs [
-      "x86_64-linux"
-    ];
-    pkgsFor = system:
-      import nixpkgs {
-        inherit system;
-      };
+    forSystems = f:
+      nixpkgs.lib.genAttrs [
+        "x86_64-linux"
+      ] (system: f nixpkgs.legacyPackages.${system});
   in {
     devShells = forSystems (
-      system: let
-        pkgs = pkgsFor system;
-      in {
+      pkgs: {
         default = pkgs.mkShell {
           nativeBuildInputs = [
             pkgs.wine
@@ -32,6 +27,6 @@
       }
     );
 
-    formatter = forSystems (system: (pkgsFor system).alejandra);
+    formatter = forSystems (pkgs: pkgs.alejandra);
   };
 }
